@@ -9,7 +9,9 @@ Compatibility: Silhouette v5.2 and up
 
 ---
 
+![screencap01](https://raw.githubusercontent.com/picostyle/TimeOffsetHelper/master/timeOffset_thumb01.png)
 
+This script can frame offset your Shapes and Layers will a simple click of a button
 
 --- 
 
