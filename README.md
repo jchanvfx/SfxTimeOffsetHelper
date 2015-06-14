@@ -36,7 +36,7 @@ go to /Applications/Silhouette v5.1, right-click on Silhouette and select Show P
 A new Browser window will open.  
 In the new Browser window, go to Contents/Resources/scripts.
 
-Copy the 3 files (jc_timeOffsetAction.py, jc_timeShape.py, jc_timeLayer.py) into the "actions" folder  
+Copy the 3 files (timeOffsetAction.py, timeOffsetShape.py, timeOffsetLayer.py) into the "actions" folder  
 Restart Silhouette and you should have a menu name "PicoStyle"
 ```
 
