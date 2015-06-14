@@ -5,8 +5,8 @@
 # --------------------------------------------------
 
 import fx
-import jc_timeLayer
-import jc_timeShape
+import timeOffsetLayer import OffsetLayer
+import timeOffsetShape import OffsetShape
 
 # _Layer Offset
 class OffsetLayerAction(fx.Action):
@@ -43,7 +43,7 @@ class OffsetLayerAction(fx.Action):
 
             for layer in selection:
                 if layer.type == 'Layer':
-                    object = jc_timeLayer.OffsetLayer(offset=frameAmount, layer=layer)
+                    object = OffsetLayer(offset=frameAmount, layer=layer)
                     object.runOffset()
                 else:
                     print '%s ignored because it is not a Layer' % layer.label
@@ -91,7 +91,7 @@ class OffsetShapesAction(fx.Action):
 
             for shape in selection:
                 if shape.type == 'Shape':
-                    object = jc_timeShape.OffsetShape(offset=frameAmount, shape=shape)
+                    object = OffsetShape(offset=frameAmount, shape=shape)
                     object.runOffset()
                 else:
                     print '%s ignored because it is not a Shape' % shape.label
@@ -137,10 +137,10 @@ class OffsetObjectsAction(fx.Action):
 
             for object in node.children:
                 if object.type == 'Shape':
-                    obj = jc_timeShape.OffsetShape(offset=frameAmount, shape=object)
+                    obj = OffsetShape(offset=frameAmount, shape=object)
                     obj.runOffset()
                 elif object.type == 'Layer':
-                    obj = jc_timeLayer.OffsetLayer(offset=frameAmount, layer=object)
+                    obj = OffsetLayer(offset=frameAmount, layer=object)
                     obj.runOffset()
                 else:
                     print '%s ignored because it is not a Shape or Layer' % object.label

@@ -1,7 +1,7 @@
 # Time Offset Helper (Layer) - Johnny Chan
 # --------------------------------------------------
 import fx
-import jc_timeShape
+from timeOffsetShape import OffsetShape
 
 class OffsetLayer():
     def __init__(self, offset=0, layer=None):
@@ -22,7 +22,7 @@ class OffsetLayer():
 
             childShapes = self._getChildShapes(allLayers)
             for shape in childShapes:
-                jc_timeShape.OffsetShape(offset=self.offsetFrames , shape=shape).runOffset()
+                OffsetShape(offset=self.offsetFrames , shape=shape).runOffset()
 
     def _offsetStereo(self, layer=None):
         '''offset for layer stereo offset'''
