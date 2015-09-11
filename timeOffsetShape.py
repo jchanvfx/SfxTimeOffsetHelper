@@ -43,7 +43,7 @@ class OffsetShape():
             offsetBlur = {}
 
             for b in blur.keys:
-                offKey = self.offsetFrames + o
+                offKey = self.offsetFrames + b
                 offsetBlur[offKey] = blur.getValue(b)
                 blurEditor.deleteKey(blur.keys.index(b))
 
