@@ -3,11 +3,8 @@
 
 ---
 
-2014 Johnny Chan  - www.picostyle.com
-For bugs please email me at johnny@picostyle.com
+2014 Johnny Chan - johnny@picostyle.com <br />
 Compatibility: Silhouette v5.2 and up
-
----
 
 ![screencap01](https://raw.githubusercontent.com/picostyle/TimeOffsetHelper/master/timeOffset_thumb01.png)
 
@@ -44,7 +41,7 @@ Restart Silhouette and you should have a menu name "PicoStyle"
 
 Anyways I hope this script works out for you.
 
-Cheers
+Cheers, <br />
 Johnny
 
 ---------------------------------------------------------------------------------------------
