@@ -39,9 +39,5 @@ Restart Silhouette and you should have a menu name "PicoStyle"
 
 ---------------------------------------------------------------------------------------------
 
-Anyways I hope this script works out for you.
-
 Cheers, <br />
 Johnny
-
----------------------------------------------------------------------------------------------

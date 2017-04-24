@@ -1,4 +1,4 @@
-# Time Offset Helper v2.1
+# Time Offset Helper v2.2
 # Compatibility: Silhouette v5.2 and up
 
 # ---------------------------------------------------------------------------------------
@@ -269,7 +269,7 @@ class OffsetLayerAction(fx.Action):
         selection = fx.selection()
         assert len(selection) > 0, "There must be more than one selection."
 
-    def execute(self):
+    def execute(self, frames=None):
         fx.beginUndo('Time Offset Selected Layers')
 
         viewer = fx.viewer
@@ -279,7 +279,10 @@ class OffsetLayerAction(fx.Action):
         offsetType = {'id':'type', 'label':'Offset', 'items':['Forward --->', 'Backward <---']}
         offseFields = [offsetInput, offsetType]
 
-        getOffsetInput = fx.getInput(title='Frame Offset (Layer Selection)', okText='Run Offset', fields=offseFields)
+        if frames == None:
+            getOffsetInput = fx.getInput(title='Frame Offset (Layer Selection)', okText='Run Offset', fields=offseFields)
+        else:
+            getOffsetInput = {'frames':frames, 'type':offsetType['items'][0]}
 
         if getOffsetInput:
             frameAmount = getOffsetInput['frames']
@@ -317,7 +320,7 @@ class OffsetShapesAction(fx.Action):
         selection = fx.selection()
         assert len(selection) > 0, "There must be more than one selection."
 
-    def execute(self):
+    def execute(self, frames=None):
         fx.beginUndo('Time Offset Selected Shapes')
 
         viewer = fx.viewer
@@ -327,7 +330,10 @@ class OffsetShapesAction(fx.Action):
         offsetType = {'id':'type', 'label':'Offset', 'items':['Forward --->', 'Backward <---']}
         offseFields = [offsetInput, offsetType]
 
-        getOffsetInput = fx.getInput(title='Frame Offset (Shape Selection)', okText='Run Offset', fields=offseFields)
+        if frames == None:
+            getOffsetInput = fx.getInput(title='Frame Offset (Shape Selection)', okText='Run Offset', fields=offseFields)
+        else:
+            getOffsetInput = {'frames':frames, 'type':offsetType['items'][0]}
 
         if getOffsetInput:
             frameAmount = getOffsetInput['frames']
@@ -363,7 +369,7 @@ class OffsetObjectsAction(fx.Action):
         node = session.node(type="RotoNode")
         assert node, "The session does not contain a Roto Node"
 
-    def execute(self):
+    def execute(self, frames=None):
         fx.beginUndo('Time Offset All Shapes and Layers')
 
         viewer = fx.viewer
@@ -373,7 +379,10 @@ class OffsetObjectsAction(fx.Action):
         offsetType = {'id':'type', 'label':'Offset', 'items':['Forward --->', 'Backward <---']}
         offseFields = [offsetInput, offsetType]
 
-        getOffsetInput = fx.getInput(title='Frame Offset (Shape Selection)', okText='Run Offset', fields=offseFields)
+        if frames == None:
+            getOffsetInput = fx.getInput(title='Frame Offset (Selection)', okText='Run Offset', fields=offseFields)
+        else:
+            getOffsetInput = {'frames':frames, 'type':offsetType['items'][0]}
 
         if getOffsetInput:
             frameAmount = getOffsetInput['frames']
