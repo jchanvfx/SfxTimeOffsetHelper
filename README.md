@@ -1,9 +1,9 @@
 
-####Time Offset Helper v2.0
+# SilhouetteFX Time Offset Helper v2.0
 
 ---
 
-2014 Johnny Chan - johnny@picostyle.com <br />
+2014 Johnny Chan - www.chantasticvfx.com <br />
 Compatibility: Silhouette v5.2 and up
 
 ![screencap01](https://raw.githubusercontent.com/picostyle/TimeOffsetHelper/master/timeOffset_thumb01.png)
