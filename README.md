@@ -1,7 +1,6 @@
 
 ## SilhouetteFX Time Offset Helper
 
----
 
 2013 Johnny Chan - www.chantasticvfx.com  <br />
 Compatibility: Silhouette v5.2 and up
@@ -12,7 +11,7 @@ This script can frame offset your Shapes and Layers will a simple click of a but
 
 ---
 
-### To Install this Script
+### Installing Script
 
 Go to the scripts folder of your Silhouette installation.
 Finding the Scripts Location.
