@@ -1,9 +1,8 @@
 # Time Offset Helper v2.2
 # Compatibility: Silhouette v5.2 and up
+# ------------------------------------------------------------------------------
 
-# ---------------------------------------------------------------------------------------
-
-# (c) 2016, Johnny Chan - johnny@picostyle.com
+# (c) 2016, Johnny Chan - johnny@chantasticvfx.com
 # All rights reserved.
 
 # Redistribution and use in source and binary forms, with or without modification,
@@ -31,18 +30,16 @@
 # WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
 # EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
-# ---------------------------------------------------------------------------------------
-
 import fx
 
-class OffsetShape():
+
+class OffsetShape(object):
     def __init__(self, offset=0, shape=None):
         self.offsetFrames = offset
         self.shape = shape
 
     def runOffset(self):
-        if self.shape != None and self.shape.type == 'Shape':
+        if self.shape and self.shape.type == 'Shape':
             self._offsetPath()
             self._offsetBlur()
             self._offsetOpacity()
@@ -72,7 +69,7 @@ class OffsetShape():
         '''offset for shape blur'''
         blur = self.shape.property('blur')
 
-        if blur.keys != []:
+        if blur.keys:
             blurEditor = fx.PropertyEditor(blur)
             offsetBlur = {}
 
@@ -97,7 +94,7 @@ class OffsetShape():
         '''offset for shape opacity'''
         opacity = self.shape.property('opacity')
 
-        if opacity.keys != []:
+        if opacity.keys:
             opacityEditor = fx.PropertyEditor(opacity)
             offsetOpacity = {}
 
@@ -122,7 +119,7 @@ class OffsetShape():
         '''offset for shape stroke width'''
         strokeWidth = self.shape.property('strokeWidth')
 
-        if strokeWidth.keys != []:
+        if strokeWidth.keys:
             strokeWidthEditor = fx.PropertyEditor(strokeWidth)
             offsetStrokeWidth = {}
 
@@ -144,22 +141,25 @@ class OffsetShape():
                 strokeWidthEditor.execute()
 
 
-class OffsetLayer():
+class OffsetLayer(object):
+
     def __init__(self, offset=0, layer=None):
         self.offsetFrames = offset
         self.layer = layer
 
     def runOffset(self):
-        if self.layer != None and self.layer.type == 'Layer':
+        if self.layer and self.layer.type == 'Layer':
             allLayers = self._getSubLayers(self.layer)
             for layer in allLayers:
                 self._offsetStereo(layer)
                 self._offsetMatrix(layer)
 
                 if layer == self.layer:
-                    print '<b>%s</b> time shifted %d frames (Layer)' %(layer.label, self.offsetFrames)
+                    print '<b>%s</b> time shifted %d frames (Layer)' %(
+                        layer.label, self.offsetFrames)
                 else:
-                    print '<b>%s</b> time shifted %d frames (Sub-Layer)' %(layer.label, self.offsetFrames)
+                    print '<b>%s</b> time shifted %d frames (Sub-Layer)' %(
+                        layer.label, self.offsetFrames)
 
             childShapes = self._getChildShapes(allLayers)
             for shape in childShapes:
@@ -169,7 +169,7 @@ class OffsetLayer():
         '''offset for layer stereo offset'''
         stereoOffset = layer.property('stereoOffset')
 
-        if stereoOffset.keys != []:
+        if stereoOffset.keys:
             stereoOffsetEditor = fx.PropertyEditor(stereoOffset)
             offsetStereoOffset = {}
 
@@ -194,7 +194,7 @@ class OffsetLayer():
         '''offset for layer transform matrix (tracking data)'''
         transformMatrix = layer.property('transform.matrix')
 
-        if transformMatrix.keys != []:
+        if transformMatrix.keys:
             transformMatrixEditor = fx.PropertyEditor(transformMatrix)
             offsetTransformMatrix = {}
 
@@ -213,7 +213,7 @@ class OffsetLayer():
             transformMatrixEditor = fx.PropertyEditor(transformMatrix)
 
             for tmk in transformMatrix.keys:
-                if not tmk in offsetTransformMatrix.keys():
+                if tmk not in offsetTransformMatrix.keys():
                     transformMatrixEditor.deleteKey(transformMatrix.keys.index(tmk))
 
             transformMatrixEditor.execute()
@@ -222,7 +222,7 @@ class OffsetLayer():
         '''query all child layers'''
         returnObjects = []
         objects = [layer]
-        while objects != []:
+        while objects:
             for object in objects:
                 objects.remove(object)
 
@@ -253,13 +253,18 @@ class OffsetLayer():
         return shapeObjects
 
 
-# _Layer Offset
 class OffsetLayerAction(fx.Action):
-    __doc__ = ("Time Offset all keyframes for the selected Layers and it's child objects\n"
-                "Note: Once this script is executed you CANNOT Undo this Action")
+    """
+    Time Offset all keyframes for the selected Layers and it's child objects
+    Note: Once this script is executed you CANNOT Undo this Action
+    """
 
     def __init__(self):
-        fx.Action.__init__(self, 'Time Offset Helper|Offset selected Layers', root='PicoStyle')
+        fx.Action.__init__(
+            self,
+            'Time Offset Helper|Offset selected Layers',
+            root='ChantasticVFX'
+        )
 
     def available(self):
         session = fx.activeSession()
@@ -275,19 +280,27 @@ class OffsetLayerAction(fx.Action):
         viewer = fx.viewer
         selection = fx.selection()
 
-        offsetInput = {'id':'frames', 'label':'Frames', 'value':0}
-        offsetType = {'id':'type', 'label':'Offset', 'items':['Forward --->', 'Backward <---']}
+        offsetInput = {'id': 'frames', 'label': 'Frames', 'value': 0}
+        offsetType = {
+            'id': 'type',
+            'label': 'Offset',
+            'items': ['Forward --->', 'Backward <---']
+        }
         offseFields = [offsetInput, offsetType]
 
         if frames == None:
-            getOffsetInput = fx.getInput(title='Frame Offset (Layer Selection)', okText='Run Offset', fields=offseFields)
+            getOffsetInput = fx.getInput(
+                title='Frame Offset (Layer Selection)',
+                okText='Run Offset',
+                fields=offseFields
+            )
         else:
-            getOffsetInput = {'frames':frames, 'type':offsetType['items'][0]}
+            getOffsetInput = {'frames': frames, 'type': offsetType['items'][0]}
 
         if getOffsetInput:
             frameAmount = getOffsetInput['frames']
             if getOffsetInput['type'] == offsetType['items'][1]:
-                frameAmount = frameAmount * -1
+                frameAmount *= -1
 
             for layer in selection:
                 if layer.type == 'Layer':
@@ -304,13 +317,18 @@ class OffsetLayerAction(fx.Action):
 fx.addAction(OffsetLayerAction())
 
 
-# _Shape Offset
 class OffsetShapesAction(fx.Action):
-    __doc__ = ("Time Offset all keyframes for the selected Shapes\n"
-                "Note: Once this script is executed you CANNOT Undo this Action")
+    """
+    Time Offset all keyframes for the selected Shapes
+    Note: Once this script is executed you CANNOT Undo this Action
+    """
 
     def __init__(self):
-        fx.Action.__init__(self, 'Time Offset Helper|Offset selected Shapes', root='PicoStyle')
+        fx.Action.__init__(
+            self,
+            'Time Offset Helper|Offset selected Shapes',
+            root='ChantasticVFX'
+        )
 
     def available(self):
         session = fx.activeSession()
@@ -326,19 +344,28 @@ class OffsetShapesAction(fx.Action):
         viewer = fx.viewer
         selection = fx.selection()
 
-        offsetInput = {'id':'frames', 'label':'Frames', 'value':0}
-        offsetType = {'id':'type', 'label':'Offset', 'items':['Forward --->', 'Backward <---']}
+        offsetInput = {
+            'id': 'frames', 'label': 'Frames', 'value': 0}
+        offsetType = {
+            'id': 'type',
+            'label': 'Offset',
+            'items': ['Forward --->', 'Backward <---']
+        }
         offseFields = [offsetInput, offsetType]
 
-        if frames == None:
-            getOffsetInput = fx.getInput(title='Frame Offset (Shape Selection)', okText='Run Offset', fields=offseFields)
+        if not frames:
+            getOffsetInput = fx.getInput(
+                title='Frame Offset (Shape Selection)',
+                okText='Run Offset',
+                fields=offseFields
+            )
         else:
             getOffsetInput = {'frames':frames, 'type':offsetType['items'][0]}
 
         if getOffsetInput:
             frameAmount = getOffsetInput['frames']
             if getOffsetInput['type'] == offsetType['items'][1]:
-                frameAmount = frameAmount * -1
+                frameAmount *= -1
 
             for shape in selection:
                 if shape.type == 'Shape':
@@ -355,13 +382,16 @@ class OffsetShapesAction(fx.Action):
 fx.addAction(OffsetShapesAction())
 
 
-# _Object Offset
 class OffsetObjectsAction(fx.Action):
-    __doc__ = ("Time Offset all Shapes and Layers with in the current activeNode\n"
-                "Note: Once this script is executed you CANNOT Undo this Action")
+    """
+    Time Offset all Shapes and Layers with in the current activeNode
+    Note: Once this script is executed you CANNOT Undo this Action
+    """
 
     def __init__(self):
-        fx.Action.__init__(self, 'Time Offset Helper|Offset all objects (Shapes and Layers)', root='PicoStyle')
+        fx.Action.__init__(
+            self, 'Time Offset Helper|Offset all Shapes and Layers',
+            root='ChantasticVFX')
 
     def available(self):
         session = fx.activeSession()
@@ -375,19 +405,27 @@ class OffsetObjectsAction(fx.Action):
         viewer = fx.viewer
         node = fx.activeNode()
 
-        offsetInput = {'id':'frames', 'label':'Frames', 'value':0}
-        offsetType = {'id':'type', 'label':'Offset', 'items':['Forward --->', 'Backward <---']}
+        offsetInput = {'id': 'frames', 'label': 'Frames', 'value': 0}
+        offsetType = {
+            'id': 'type',
+            'label': 'Offset',
+            'items': ['Forward --->', 'Backward <---']
+        }
         offseFields = [offsetInput, offsetType]
 
-        if frames == None:
-            getOffsetInput = fx.getInput(title='Frame Offset (Selection)', okText='Run Offset', fields=offseFields)
+        if not frames:
+            getOffsetInput = fx.getInput(
+                title='Frame Offset (Selection)',
+                okText='Run Offset',
+                fields=offseFields
+            )
         else:
-            getOffsetInput = {'frames':frames, 'type':offsetType['items'][0]}
+            getOffsetInput = {'frames': frames, 'type': offsetType['items'][0]}
 
         if getOffsetInput:
             frameAmount = getOffsetInput['frames']
             if getOffsetInput['type'] == offsetType['items'][1]:
-                frameAmount = frameAmount * -1
+                frameAmount *= -1
 
             for object in node.children:
                 if object.type == 'Shape':
@@ -397,8 +435,8 @@ class OffsetObjectsAction(fx.Action):
                     obj = OffsetLayer(offset=frameAmount, layer=object)
                     obj.runOffset()
                 else:
-                    print '%s ignored because it is not a Shape or Layer' % object.label
-
+                    print '%s ignored because it is not a Shape or Layer' \
+                          % object.label
         viewer.update()
         fx.endUndo()
 
