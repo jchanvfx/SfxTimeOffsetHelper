@@ -5,7 +5,7 @@
 2013 Johnny Chan - www.chantasticvfx.com  <br />
 Compatibility: Silhouette v5.2 and up
 
-![screencap01](https://raw.githubusercontent.com/jchanvfx/TimeOffsetHelper/master/timeOffset_thumb01.png)
+![screencap01](https://raw.githubusercontent.com/jchanvfx/SfxTimeOffsetHelper/master/timeOffset_thumb01.png)
 
 This script can frame offset your Shapes and Layers will a simple click of a button
 
