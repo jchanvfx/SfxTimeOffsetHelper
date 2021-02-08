@@ -2,7 +2,7 @@
 ## SilhouetteFX Time Offset Helper
 
 
-2013 Johnny Chan - www.chantasticvfx.com  <br />
+2013 Johnny Chan - https://jchanvfx.github.io/  <br />
 Compatibility: Silhouette v5.2 and up
 
 ![screencap01](https://raw.githubusercontent.com/jchanvfx/SfxTimeOffsetHelper/master/timeOffset_thumb01.png)
